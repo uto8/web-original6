@@ -1,5 +1,6 @@
  let spotList=[];
 
+
 const loadview=()=>{
   const topicText=firebase
    .database()
@@ -17,7 +18,9 @@ const loadview=()=>{
     spotList.push(topicData.text);
     console.log(spotList);
   });
+
 };
+
 
 const deletetopic = (topicId) => {
   firebase
@@ -50,52 +53,13 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
-// topic削除機能
-// const deleteTopic=(topicId)=>{
-//   firebase
-//     .database()
-//     .ref('topics')
-//     .child()
-//     .remove()
-//     .then(()=>{
-//       console.log("削除成功")
-//     })
-//     .catch((error)=>{
-//       console.log("エラー:",error);
-//     });
-// };
-//
-// $("#trash").on('click',(e)=>{
-//   console.log("削除機能作動")
-//   deleteTopic();
-// });
 
 
 
-// トピック追加処理
-// $("#add-topic").on("submit",(e)=>{
-//   const topic=$('#add-topic__text').val();
-//
-//   e.preventDefault();
-//
-//
-//   if (topic === '') {
-//     return;
-//   }
-//   firebase
-//     .database()
-//     .ref('topics')
-//     .push(topic)
-//     .then(()=>{
-//       $("#exampleModal").modal('hide');
-//       resetModal();
-//       console.log(topic);
-//       spotList.push(topic);
-//       console.log(spotList);
-//     });
-//
-//
-// });
+
+
+
+
 $("#add-topic").on("submit",(e)=>{
   const topic=$('#add-topic__text').val();
   const theme={
@@ -116,8 +80,6 @@ $("#add-topic").on("submit",(e)=>{
       $("#exampleModal").modal('hide');
       resetModal();
       console.log(topic);
-      spotList.push(topic);
-      console.log(spotList);
     });
 
 
@@ -165,3 +127,10 @@ function clickedStop() {
     document.getElementById("isPlace").innerHTML = place;
     }
 }
+
+$("#delete").on("click",(e)=>{
+  e.preventDefault();
+  firebase.database().ref('topics').remove();
+
+  spotList.splice(0);
+});
